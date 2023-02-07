@@ -29,7 +29,7 @@ async def post_ticket_models(ticket: Ticket) -> TicketModel:
     return await TicketModel.create(
         status=TicketStatus.NEW,
         created=datetime.now(),
-        sender_id=user,
+        sender=user,
         tag=ticket.tag,
         content=ticket.content,
     )
@@ -43,17 +43,17 @@ async def post_ticket_response_models(
     ticket = await TicketModel.filter(id=ticket_response.ticket_id).first()
     await TicketResponseModel.create(
         created=datetime.now(),
-        sender_id=user,
-        ticket_id=ticket,
+        sender=user,
+        ticket=ticket,
         content=ticket_response.content,
     )
     return ticket_response
 
 
-@router.get("/tickets/id", response_model=None)
-async def get_ticket_models_by_id(
-    ticket_id: int,
-    limit: int = 10,
-    offset: int = 0,
-) -> List[TicketModel]:
-    return await TicketModel.filter(id=ticket_id).offset(offset).limit(limit)
+@router.get("/tickets/{ticket_id}", response_model=None)
+async def get_ticket_models_by_id(ticket_id: int) -> TicketModel:
+    return await TicketModel.get(id=ticket_id)
+
+
+# @app.get("/items/{item_id}")
+# async def read_item(item_id):

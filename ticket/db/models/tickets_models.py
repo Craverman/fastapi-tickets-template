@@ -1,7 +1,8 @@
 from enum import Enum
 
 from tortoise import ForeignKeyFieldInstance, fields, models
-from users_models import User
+
+from ticket.db.models.users_models import User
 
 
 class TicketStatus(Enum):
@@ -19,7 +20,7 @@ class TicketModel(models.Model):
     tag = fields.TextField()
     content = fields.TextField()
     status = fields.CharEnumField(TicketStatus, default="new")
-    sender_id: ForeignKeyFieldInstance[User] = fields.ForeignKeyField(
+    sender: ForeignKeyFieldInstance[User] = fields.ForeignKeyField(
         "models.User",
         related_name="sender_id",
     )
@@ -31,11 +32,11 @@ class TicketResponseModel(models.Model):
 
     id = fields.IntField(pk=True)
     content = fields.TextField()
-    sender_id: ForeignKeyFieldInstance[User] = fields.ForeignKeyField(
+    sender: ForeignKeyFieldInstance[User] = fields.ForeignKeyField(
         "models.User",
         related_name="ticket_sender",
     )
-    ticket_id: ForeignKeyFieldInstance[TicketModel] = fields.ForeignKeyField(
+    ticket: ForeignKeyFieldInstance[TicketModel] = fields.ForeignKeyField(
         "models.TicketModel",
         related_name="ticket_response",
     )
