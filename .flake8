@@ -10,6 +10,8 @@ ignore =
   WPS305,
   ; Missing docstring in public module
   D100,
+  D103,
+  D104,
   ; Missing docstring in magic method
   D105,
   ; Missing docstring in __init__
