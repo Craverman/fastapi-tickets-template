@@ -13,7 +13,7 @@ async def test_creation(
     fastapi_app: FastAPI,
     client: AsyncClient,
 ) -> None:
-    """Tests ticket instance creation."""
+    """Tests dummy instance creation."""
     url = fastapi_app.url_path_for("create_dummy_model")
     test_name = uuid.uuid4().hex
     response = await client.put(
@@ -33,7 +33,7 @@ async def test_getting(
     fastapi_app: FastAPI,
     client: AsyncClient,
 ) -> None:
-    """Tests ticket instance retrieval."""
+    """Tests dummy instance retrieval."""
     dao = DummyDAO()
     test_name = uuid.uuid4().hex
     await dao.create_dummy_model(name=test_name)
