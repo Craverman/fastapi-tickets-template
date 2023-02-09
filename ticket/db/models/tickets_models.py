@@ -26,6 +26,9 @@ class TicketModel(models.Model):
     )
     created = fields.DatetimeField(auto_now_add=True)
 
+    class Meta:
+        table = "tickets"
+
 
 class TicketResponseModel(models.Model):
     """Model for response on ticket."""
@@ -41,3 +44,6 @@ class TicketResponseModel(models.Model):
         related_name="ticket_response",
     )
     created = fields.DatetimeField()
+
+    class Meta:
+        table = "ticket_responses"

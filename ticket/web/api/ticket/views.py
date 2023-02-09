@@ -76,6 +76,3 @@ async def get_ticket_models_by_id(ticket_id: int) -> Ticket:
     if not ticket:
         raise HTTPException(status_code=404, detail="Item not found")
     return ticket
-
-
-# noqa: DAR401
