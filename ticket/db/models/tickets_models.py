@@ -19,12 +19,12 @@ class TicketModel(models.Model):
     id = fields.IntField(pk=True)
     tag = fields.TextField()
     content = fields.TextField()
-    status = fields.CharEnumField(TicketStatus, default="new")
+    status = fields.CharEnumField(TicketStatus, default=TicketStatus.NEW.value)
     sender: ForeignKeyFieldInstance[User] = fields.ForeignKeyField(
         "models.User",
         related_name="sender_id",
     )
-    created = fields.DatetimeField()
+    created = fields.DatetimeField(auto_now_add=True)
 
 
 class TicketResponseModel(models.Model):
