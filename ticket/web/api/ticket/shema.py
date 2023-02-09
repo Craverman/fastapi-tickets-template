@@ -1,8 +1,9 @@
 import datetime
 
 from pydantic import BaseModel
+from tortoise.contrib.pydantic import pydantic_model_creator
 
-from ticket.db.models.tickets_models import TicketStatus
+from ticket.db.models.tickets_models import TicketResponseModel, TicketStatus
 
 
 class TicketCreate(BaseModel):
@@ -37,9 +38,4 @@ class TicketResponseCreate(BaseModel):
         orm_mode = True
 
 
-class TicketResponse(TicketResponseCreate):
-    """DTO for TicketResponseModel."""
-
-    id: int
-    created: datetime.datetime
-    sender_id: int
+TicketResponse = pydantic_model_creator(TicketResponseModel)

@@ -12,6 +12,7 @@ ignore =
   D100,
   D103,
   D104,
+  DAR401
   ; Missing docstring in magic method
   D105,
   ; Missing docstring in __init__

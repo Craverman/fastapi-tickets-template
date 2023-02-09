@@ -17,7 +17,7 @@ class TicketResponseDAO:
         self,
         ticket_id: int,
         content: str,
-    ) -> TicketResponse:
+    ) -> TicketResponse:  # type: ignore
         """Add single ticketresponse to table.
 
         :param ticket_id: id of ticket
@@ -32,7 +32,7 @@ class TicketResponseDAO:
             sender=user,
             content=content,
         )
-        return TicketResponse(**dict(ticket_response))
+        return await TicketResponse.from_tortoise_orm(ticket_response)
 
 
 class TicketDAO:
