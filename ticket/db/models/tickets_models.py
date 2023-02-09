@@ -19,7 +19,7 @@ class TicketModel(models.Model):
     id = fields.IntField(pk=True)
     tag = fields.TextField()
     content = fields.TextField()
-    status = TicketStatus.NEW.value
+    status = fields.CharEnumField(TicketStatus, default=TicketStatus.NEW.value)
     sender: ForeignKeyFieldInstance[User] = fields.ForeignKeyField(
         "models.User",
         related_name="sender_id",
