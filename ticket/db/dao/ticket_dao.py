@@ -1,4 +1,5 @@
 from datetime import datetime
+from types import coroutine
 from typing import List
 
 from ticket.db.models.tickets_models import (
@@ -7,7 +8,6 @@ from ticket.db.models.tickets_models import (
     TicketStatus,
 )
 from ticket.web.api.ticket.shema import Ticket, TicketResponse
-from ticket.web.api.users.controler import check_auth
 
 
 class TicketResponseDAO:
@@ -15,16 +15,17 @@ class TicketResponseDAO:
 
     async def create_ticket_response_model(
         self,
+        user: coroutine,  # type: ignore
         ticket_id: int,
         content: str,
     ) -> TicketResponse:  # type: ignore
         """Add single ticketresponse to table.
 
+        :param user: user
         :param ticket_id: id of ticket
         :param content: content for ticket
         :return: ticketresponse
         """
-        user = await check_auth()
         ticket = await TicketModel.filter(id=ticket_id).first()
         ticket_response = await TicketResponseModel.create(
             ticket=ticket,
@@ -38,15 +39,20 @@ class TicketResponseDAO:
 class TicketDAO:
     """Class for accessing ticket table."""
 
-    async def create_ticket_model(self, tag: str, content: str) -> Ticket:
+    async def create_ticket_model(
+        self,
+        user: coroutine,  # type: ignore
+        tag: str,
+        content: str,
+    ) -> Ticket:
         """
         Add single ticket to table.
 
+        :param user: user
         :param tag: tag for ticket
         :param content: content for ticket
         :return: ticket
         """
-        user = await check_auth()
         ticket = await TicketModel.create(
             status=TicketStatus.NEW,
             created=datetime.now(),

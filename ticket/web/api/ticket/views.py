@@ -11,6 +11,7 @@ from ticket.web.api.ticket.shema import (
     TicketResponseCreate,
 )
 from ticket.web.api.users.auth import auth_required
+from ticket.web.api.users.controler import check_auth
 
 router = APIRouter()
 
@@ -44,7 +45,8 @@ async def post_ticket_models(
     :param ticket_dao: DAO for ticket models
     :return: creating ticket object
     """
-    return await ticket_dao.create_ticket_model(**new_ticket_object.dict())
+    user = await check_auth()
+    return await ticket_dao.create_ticket_model(user, **new_ticket_object.dict())
 
 
 @router.post("/ticketResponse")
@@ -59,12 +61,14 @@ async def post_ticket_response_models(
     :param ticket_response_dao: DAO for ticketresponse models
     :return: creating ticket_response object
     """
+    user = await check_auth()
     ticket = await TicketDAO.filter(
         ticket_id=new_ticket_response_object.ticket_id,
     )
     if not ticket:
         raise HTTPException(status_code=404, detail="Item not found")
     return await ticket_response_dao.create_ticket_response_model(
+        user,
         **new_ticket_response_object.dict(),
     )
 
