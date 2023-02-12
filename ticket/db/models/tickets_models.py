@@ -43,7 +43,7 @@ class TicketResponseModel(models.Model):
         "models.TicketModel",
         related_name="ticket_response",
     )
-    created = fields.DatetimeField()
+    created = fields.DatetimeField(auto_now_add=True)
 
     class Meta:
         table = "ticket_responses"
