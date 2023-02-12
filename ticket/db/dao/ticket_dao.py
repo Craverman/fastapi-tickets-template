@@ -1,4 +1,3 @@
-from datetime import datetime
 from types import coroutine
 from typing import List
 
@@ -26,10 +25,8 @@ class TicketResponseDAO:
         :param content: content for ticket
         :return: ticketresponse
         """
-        ticket = await TicketModel.filter(id=ticket_id).first()
         ticket_response = await TicketResponseModel.create(
-            ticket=ticket,
-            created=datetime.now(),
+            ticket_id=ticket_id,
             sender=user,
             content=content,
         )
@@ -55,7 +52,6 @@ class TicketDAO:
         """
         ticket = await TicketModel.create(
             status=TicketStatus.NEW,
-            created=datetime.now(),
             sender=user,
             tag=tag,
             content=content,
